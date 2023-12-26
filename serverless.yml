@@ -1,0 +1,27 @@
+service: tokenization
+
+useDotenv: true
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions: 
+  store: 
+    handler: src/infrastructure/handlers/tokens.store
+    events:
+      - httpApi: POST /tokens
+  show:
+    handler: src/infrastructure/handlers/tokens.show
+    events:
+      - httpApi: GET /tokens
+
+custom:
+  esbuild:
+    bundle: true
+    minify: true
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+  
